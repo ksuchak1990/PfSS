@@ -4,6 +4,8 @@
 import random as rand
 import math
 
+agents = list()
+
 ## Model:
 # Make a x variable.
 x0 = 50
@@ -11,9 +13,11 @@ x0 = 50
 # Make a y variable.
 y0 = 50
 
-# Randomise start points instead
-x0 = rand.random(0,100)
-y0 = rand.random(0,100)
+# # Randomise start points instead
+# x0 = rand.randomint(0,100)
+# y0 = rand.randomint(0,100)
+
+agents.append([x0, y0])
 
 # Test that they've been assigned properly
 print('x0 = {0}, y0 = {1}'.format(x0, y0))
@@ -62,9 +66,9 @@ x1 = 50
 # Make a y variable.
 y1 = 50
 
-# Randomise start points instead
-x1 = rand.random(0,100)
-y1 = rand.random(0,100)
+# # Randomise start points instead
+# x1 = rand.randint(0,100)
+# y1 = rand.randint(0,100)
 
 # Test that they've been assigned properly
 print('x1 = {0}, y1 = {1}'.format(x1, y1))
