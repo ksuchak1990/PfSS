@@ -100,12 +100,12 @@ print(agents)
 answer = math.sqrt((agents[1][0]-agents[0][0])**2 + (agents[1][1]-agents[0][1])**2)
 print(answer)
 
-# Getting the most northern agent
-print(max(agents, key=op.itemgetter(1)))
-
 # A little bit of plotting
 py.xlim(0,99)
 py.ylim(0,99)
-py.scatter(agents[0][0], agents[0][1], color='red')
-py.scatter(agents[1][0], agents[1][1], color='green')
+m = max(agents, key=op.itemgetter(1))
+print(m)
+py.scatter(agents[0][0], agents[0][1])
+py.scatter(agents[1][0], agents[1][1])
+py.scatter(m[0], m[1], color='red')
 py.show()
