@@ -57,7 +57,7 @@ def run(num, plotting=False):
 	agents = list()
 
 	# Make agents, and provide each one with an initial x-y coordinate	
-	for i in range(num_of_agents):
+	for i in range(num):
 		agents.append([rand.randint(0, board_size), rand.randint(0, board_size)])
 
 	# Make each agent move an arbitrary number of times
