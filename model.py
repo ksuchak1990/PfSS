@@ -1,5 +1,6 @@
 ## Agent Practical 6 of 9
-vis = True
+## Visualisations on/off
+vis = False
 
 ## Imports:
 import random as rand
@@ -12,6 +13,7 @@ import csv
 ## Constants:
 num_of_agents = 10
 num_of_iterations = 10000
+
 agents = list()
 
 ## Functions:
@@ -29,7 +31,7 @@ with open('in.txt', newline='') as f:
             row_list.append(int(item))
         environment.append(row_list)
 
-#  Plot environment
+# Plot initial environment
 if vis:
     plt.xlim(0,len(environment[0]))
     plt.ylim(0,len(environment))
@@ -47,13 +49,16 @@ for j in range(num_of_iterations):
         agent.eat()
         agent.sick()
 
-# Write out the end environment
+# Write out the final environment
 with open('out.txt', 'w', newline='') as g:
     csvwriter = csv.writer(g, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
     for row in environment:
         csvwriter.writerow(row)
 
-# Write agent stores
+# Write out final agent stores
+with open('stores.txt', 'a') as h:
+    stores = ','.join([str(agent.store) for agent in agents])
+    h.write('{0}\n'.format(stores))
 
 # Plotting
 if vis:
