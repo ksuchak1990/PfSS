@@ -1,4 +1,4 @@
-## Agent Practical 6 of 9
+## Agent Practical 7 of 9
 ## Visualisations on/off
 vis = False
 
@@ -9,10 +9,19 @@ import operator as op
 import matplotlib.pyplot as plt
 import agentframework
 import csv
+import sys
 
 ## Constants:
-num_of_agents = 10
-num_of_iterations = 10000
+if len(sys.argv) != 4:
+    print('Incorrect number of args - reverting to default args')
+    num_of_agents = 10
+    num_of_iterations = 100
+    neighbourhood = 20
+else:
+    num_of_agents = int(sys.argv[1])
+    num_of_iterations = int(sys.argv[2])
+    neighbourhood = int(sys.argv[3])
+print('Running for {0} agents, {1} iterations, neighbourhood = {2}'.format(num_of_agents, num_of_iterations, neighbourhood))
 
 agents = list()
 
@@ -40,14 +49,17 @@ if vis:
 
 # Make agents
 for i in range(num_of_agents):
-    agents.append(agentframework.Agent(environment))
+    agents.append(agentframework.Agent(environment, agents))
 
 # Move agents
 for j in range(num_of_iterations):
+    # Shuffle order of agents in each iteration
+    rand.shuffle(agents)
     for agent in agents:
         agent.move()
         agent.eat()
-        agent.sick()
+        # agent.sick()
+        agent.share_with_neighbours(neighbourhood)
 
 # Write out the final environment
 with open('out.txt', 'w', newline='') as g:

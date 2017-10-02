@@ -2,6 +2,7 @@
 
 ## Imports
 import random as rand
+import math
 
 ## Define Agent class
 class Agent():
@@ -11,6 +12,7 @@ class Agent():
 
     Constructor takes argument:
         env -- a list of lists characterising the 2-d landscape in which the agent exists (no default)
+        agents -- list of agents in the environment
 
     Agent characteristics:
         - store
@@ -23,13 +25,14 @@ class Agent():
         - sick
     """
     ## Constructor methods
-    def __init__(self, env):
+    def __init__(self, env, agents):
         self._environment = env
         self._store = 0
         self._env_width = len(env[0])   ## Assue that all rows are the same width
         self._env_height = len(env)
         self._x = rand.randint(0,self._env_width)
         self._y = rand.randint(0,self._env_height)
+        self._agents = agents
 
     ## Accessor methods
     # Access x
@@ -87,6 +90,27 @@ class Agent():
         if self._store > 1000:
             self._environment[self._y][self._x] += quantity
             self._store -= quantity
+
+    # Calculate distance between self and other agent
+    def distance_between(self, other_agent):
+        return math.sqrt((self._x - other_agent.x)**2 + (self._y - other_agent.y)**2)
+
+    # Share with neighbours
+    def share_with_neighbours(self, neighbourhood):
+        counter = 0
+        # Loop through the agents in self.agents
+        for agent in filter(lambda a: a != self, self._agents):
+            # Calculate the distance between self and the current other agent:
+            distance = self.distance_between(agent)
+            # If distance is less than or equal to the neighbourhood
+            if distance <= neighbourhood:
+                # Sum self.store and agent.store
+                # Divide sum by two to calculate average
+                average = (self.store + agent.store)/2
+                self.store = average
+                agent.store = average
+                # print('distance = {4}, therefore shared: ({0},{1}) - ({2},{3})'.format(self._x, self._y, agent.x, agent.y, distance))
+                # print(self.store, agent.store)
 
     ## Properties
     x = property(fget=getx, fset=setx, doc='The x-coordinate of the agent')
