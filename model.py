@@ -25,10 +25,6 @@ print('Running for {0} agents, {1} iterations, neighbourhood = {2}'.format(num_o
 
 agents = list()
 
-## Functions:
-def distance_between(agent0, agent1):
-    return math.sqrt((agent0.x - agent1.x)**2 + (agent0.y - agent1.y)**2)
-
 ## Main:
 # Read in data
 environment = list()
