@@ -100,5 +100,6 @@ ENV/
 # mypy
 .mypy_cache/
 
-# Odd text files
-*.txt
+# Output files
+stores.txt
+out.txt
