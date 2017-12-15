@@ -36,28 +36,28 @@ class Agent():
 
     ## Accessor methods
     # Access x
-    def getx(self):
+    def getX(self):
         return self._x
 
     # Access y
-    def gety(self):
+    def getY(self):
         return self._y
 
     # Access store
-    def getstore(self):
+    def getStore(self):
         return self._store
     
     ## Modifier methods
     # Modify x
-    def setx(self, input_x):
+    def setX(self, input_x):
         self._x = input_x
 
     # Modify y
-    def sety(self, input_y):
+    def setY(self, input_y):
         self._y = input_y
 
     # Modify store
-    def setstore(self, input_store):
+    def setStore(self, input_store):
         self._store = input_store
 
     # Move
@@ -111,9 +111,9 @@ class Agent():
                 agent.store = average
 
     ## Properties
-    x = property(fget=getx, fset=setx, doc='The x-coordinate of the agent')
-    y = property(fget=gety, fset=sety, doc='The y-coordinate of the agent')
-    store = property(fget=getstore, fset=setstore, doc='The store of the agent')
+    x = property(fget=getX, fset=setX, doc='The x-coordinate of the agent')
+    y = property(fget=getY, fset=setY, doc='The y-coordinate of the agent')
+    store = property(fget=getStore, fset=setStore, doc='The store of the agent')
 
     def __str__(self):
         return 'x-coordinate = {0}, y-coordinate = {1}, store = {2}'.format(self._x, self._y, self._store)
