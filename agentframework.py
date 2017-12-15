@@ -11,13 +11,13 @@ class Agent():
     A class to capture the behaviour of an abstract agent interacting with a given environment.
 
     Constructor takes argument:
-        env -- a list of lists characterising the 2-d landscape in which the agent exists (no default)
-        agents -- list of agents in the environment
+        env -- a list of lists characterising the 2-d landscape in which the agent exists (no default).
+        agents -- a list of agents in the environment.
 
     Agent characteristics:
         - store
-        - x coordinate
-        - y coordinate
+        - x-coordinate
+        - y-coordinate
 
     Agent behaviours include:
         - move
@@ -92,7 +92,7 @@ class Agent():
             self._store -= quantity
 
     # Calculate distance between self and other agent
-    def distance_between(self, other_agent):
+    def _distance_between(self, other_agent):
         return math.sqrt((self._x - other_agent.x)**2 + (self._y - other_agent.y)**2)
 
     # Share with neighbours
@@ -101,7 +101,7 @@ class Agent():
         # Loop through the agents in self.agents
         for agent in filter(lambda a: a != self, self._agents):
             # Calculate the distance between self and the current other agent:
-            distance = self.distance_between(agent)
+            distance = self._distance_between(agent)
             # If distance is less than or equal to the neighbourhood
             if distance <= neighbourhood:
                 # Sum self.store and agent.store
@@ -109,8 +109,6 @@ class Agent():
                 average = (self.store + agent.store)/2
                 self.store = average
                 agent.store = average
-                # print('distance = {4}, therefore shared: ({0},{1}) - ({2},{3})'.format(self._x, self._y, agent.x, agent.y, distance))
-                # print(self.store, agent.store)
 
     ## Properties
     x = property(fget=getx, fset=setx, doc='The x-coordinate of the agent')
