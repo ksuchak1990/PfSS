@@ -1,16 +1,21 @@
-# Agent Practical 7 of 9
+"""
+Programming for Social Science September '17
+Model runner script
+@author: Keiran Suchak
+"""
 
-## Imports:
+# Imports:
 import csv
 import sys
 import random as rand
 import matplotlib.pyplot as plt
 from agentframework import Agent
 
-## Set up constants:
-### Visualisations and on/off
+# Set up constants:
+# Visualisations and on/off
 vis = True
-### Command line args
+
+# Command line args
 if len(sys.argv) != 4:
     if len(sys.argv) == 1:
         print('No args provided - reverting to default args')
@@ -25,8 +30,8 @@ else:
     neighbourhood = int(sys.argv[3])
 print('Running for {0} agents, {1} iterations, neighbourhood = {2}'.format(num_of_agents, num_of_iterations, neighbourhood))
 
-## Functions
-### Read in data
+# Functions
+# Read in data
 def readEnvironment(fileName="in.txt"):
     env = list()
     with open(fileName, newline='') as f:
@@ -38,52 +43,58 @@ def readEnvironment(fileName="in.txt"):
             env.append(row_list)
     return env
 
-### Write out the final environment
+# Write out the final environment
 def writeEnvironment(data, fileName='out.txt'):
     with open(fileName, 'w', newline='') as g:
         csvwriter = csv.writer(g, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
         for row in data:
             csvwriter.writerow(row)
 
+# Append final stores to file
 def writeStores(data, fileName='stores.txt'):
-    # Write out final agent stores
     stores = ','.join([str(agent.store) for agent in data])
     with open('stores.txt', 'a') as h:
         h.write('{0}\n'.format(stores))
 
-## Main:
-### Initialisation
+# # Update animation
+# def update(frameNumber):
+#     fig.clear()
+#     for agent in agents:
+#         agent.move()
+#         plt.scatter(agent.x, agent.y)
+
+# Main:
+# Initialisation
 agents = list()
 environment = readEnvironment()
+environmentWidth = len(environment[0])
+environmentHeight = len(environment)
 
-### Plot initial environment
+# Plot initial environment
 if vis:
-    plt.xlim(0,len(environment[0]))
-    plt.ylim(0,len(environment))
+    plt.xlim(0, environmentWidth)
+    plt.ylim(0, environmentHeight)
     plt.imshow(environment)
     plt.show()
 
-### Make agents
+# Make agents
 for i in range(num_of_agents):
-    agents.append(Agent(environment, agents))
+    agents.append(Agent(environment, agents, neighbourhood))
 
-### Iterate agent interaction
+# Iterate agent interaction
 for j in range(num_of_iterations):
-    ### Shuffle order of agents in each iteration
+    # Shuffle order of agents in each iteration
     rand.shuffle(agents)
     for agent in agents:
-        agent.move()
-        agent.eat()
-        # agent.sick()
-        agent.share_with_neighbours(neighbourhood)
+        agent.interact()
 
 writeEnvironment(data=environment)
 writeStores(data=agents)
 
-### Plotting
+# Plotting
 if vis:
-    plt.xlim(0,len(environment[0]))
-    plt.ylim(0,len(environment))
+    plt.xlim(0, environmentWidth)
+    plt.ylim(0, environmentHeight)
     plt.imshow(environment)
     for agent in agents:
         plt.scatter(agent.x, agent.y)

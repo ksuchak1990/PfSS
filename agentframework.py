@@ -1,10 +1,14 @@
-## Agent Framework
+"""
+Programming for Social Science September '17
+Agent Class
+@author: Keiran Suchak
+"""
 
-## Imports
+# Imports
 import random as rand
 import math
 
-## Define Agent class
+# Agent class
 class Agent():
     """
     Agent class:
@@ -13,6 +17,7 @@ class Agent():
     Constructor takes argument:
         env -- a list of lists characterising the 2-d landscape in which the agent exists (no default).
         agents -- a list of agents in the environment.
+        neighbourhood -- the cartesian distance within which an agent will consider sharing its store.
 
     Agent characteristics:
         - store
@@ -24,57 +29,56 @@ class Agent():
         - eat
         - sick
     """
-    ## Constructor methods
-    def __init__(self, env, agents):
+    # Constructor methods
+    def __init__(self, env, agents, neighbourhood):
         self._environment = env
         self._store = 0
-        self._env_width = len(env[0])   ## Assue that all rows are the same width
-        self._env_height = len(env)
-        self._x = rand.randint(0,self._env_width)
-        self._y = rand.randint(0,self._env_height)
+        self._envWidth = len(env[0])   ## Assume that all rows are the same width
+        self._envHeight = len(env)
+        self._x = rand.randint(0,self._envWidth)
+        self._y = rand.randint(0,self._envHeight)
         self._agents = agents
+        self._neighbourhood = neighbourhood
 
-    ## Accessor methods
-    # Access x
+    # Accessor methods
     def getX(self):
         return self._x
 
-    # Access y
     def getY(self):
         return self._y
 
-    # Access store
     def getStore(self):
         return self._store
+
+    def getNeighbourhood(self):
+        return self._neighbourhood
     
-    ## Modifier methods
-    # Modify x
-    def setX(self, input_x):
-        self._x = input_x
+    # Modifier methods
+    def setX(self, inputX):
+        self._x = inputX
 
-    # Modify y
-    def setY(self, input_y):
-        self._y = input_y
+    def setY(self, inputY):
+        self._y = inputY
 
-    # Modify store
-    def setStore(self, input_store):
-        self._store = input_store
+    def setStore(self, inputStore):
+        self._store = inputStore
 
-    # Move
+    def setNeighbourhood(self, inputNeighbourhood):
+        self._neighbourhood = inputNeighbourhood
+
     def move(self):
         # Move x
         if rand.random() < 0.5:
-            self._x = (self._x + 1) % self._env_width
+            self._x = (self._x + 1) % self._envWidth
         else:
-            self._x = (self._x - 1) % self._env_width
+            self._x = (self._x - 1) % self._envWidth
 
         # Move y
         if rand.random() < 0.5:
-            self._y = (self._y + 1) % self._env_height
+            self._y = (self._y + 1) % self._envHeight
         else:
-            self._y = (self._y - 1) % self._env_height
+            self._y = (self._y - 1) % self._envHeight
 
-    # Eat
     def eat(self):
         if self._environment[self._y][self._x] > 10:
             self._environment[self._y][self._x] -= 10
@@ -84,36 +88,37 @@ class Agent():
             self._environment[self._y][self._x] -= 1
             self._store += 1
 
-    # Sick
     def sick(self, quantity=50):
-        # Avoid using to high a quantity to throw up, as this can max out the matplotlib colour scale
+        # Avoid using too high a quantity to throw up, as this can max out the matplotlib colour scale
         if self._store > 1000:
             self._environment[self._y][self._x] += quantity
             self._store -= quantity
 
-    # Calculate distance between self and other agent
-    def _distance_between(self, other_agent):
-        return math.sqrt((self._x - other_agent.x)**2 + (self._y - other_agent.y)**2)
+    def interact(self):
+        self.move()
+        self.eat()
+        self.shareWithNeighbours()
 
-    # Share with neighbours
-    def share_with_neighbours(self, neighbourhood):
-        counter = 0
-        # Loop through the agents in self.agents
+    # Calculate cartesian distance between self and other agent
+    def _distanceBetween(self, otherAgent):
+        return math.sqrt((self._x - otherAgent.x)**2 + (self._y - otherAgent.y)**2)
+
+    def shareWithNeighbours(self):
         for agent in filter(lambda a: a != self, self._agents):
-            # Calculate the distance between self and the current other agent:
-            distance = self._distance_between(agent)
-            # If distance is less than or equal to the neighbourhood
-            if distance <= neighbourhood:
-                # Sum self.store and agent.store
-                # Divide sum by two to calculate average
-                average = (self.store + agent.store)/2
-                self.store = average
+            distance = self._distanceBetween(agent)
+            # Only share with other agents within neighbourhood
+            if distance <= self._neighbourhood:
+                # Share stores equally
+                average = (self._store + agent.store)/2
+                self._store = average
                 agent.store = average
 
-    ## Properties
+    # Properties
     x = property(fget=getX, fset=setX, doc='The x-coordinate of the agent')
     y = property(fget=getY, fset=setY, doc='The y-coordinate of the agent')
     store = property(fget=getStore, fset=setStore, doc='The store of the agent')
+    neighbourhood = property(fget=getNeighbourhood, fset=setNeighbourhood, doc='The neighbourhood of the agent')
 
+    # Agent string
     def __str__(self):
-        return 'x-coordinate = {0}, y-coordinate = {1}, store = {2}'.format(self._x, self._y, self._store)
+        return 'Agent(x-coordinate={0}, y-coordinate={1}, store={2})'.format(self._x, self._y, self._store)
