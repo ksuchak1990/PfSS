@@ -10,7 +10,7 @@ This Agent class is defined in agentframework.py.
 
 The original intention is that this code be run from the command-line/terminal by running
 
-  ```python model.py [arg1=10] [arg2=100] [arg3=20]```
+<center>```python model.py [arg1=10] [arg2=100] [arg3=20]```</center>
 
 where the arguments are optional and defined as follows:
 * `arg1`: number of agents
