@@ -9,11 +9,13 @@ This is achieved by implementing the agents through an object-oriented approach,
 This Agent class is defined in agentframework.py.
 
 The original intention is that this code be run from the command-line/terminal by running
-	```python model.py [arg1=10] [arg2=100] [arg3=20]```
+
+```python model.py [arg1=10] [arg2=100] [arg3=20]```
+
 where the arguments are optional and defined as follows:
-* arg1: number of agents
-* arg2: number of iterations
-* arg3: neighbourhood in terms of cartesian distance from agent
+* `arg1`: number of agents
+* `arg2`: number of iterations
+* `arg3`: neighbourhood in terms of cartesian distance from agent
 In the case when arguments are not provided, default values will be used.
 
 Notes:
