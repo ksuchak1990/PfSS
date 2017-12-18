@@ -44,3 +44,7 @@ Please note that colour-scales may vary between machines with different versions
 For those interested in the code, the programmer has assumed the reader's awareness of the following conventions:
 * CamelCase naming convention,
 * '`get`' and '`set`' function naming for accessor and modifier methods respectively.
+
+Please also note, the programmer has undertaken a somewhat minimal approach to commenting based on two motivations:
+* A basic understanding of programming logic is assumed, i.e. the usage of data structures such as `dict` and `list`, and flow control such as `for` loops and `if` statements,
+* Functions and variables have been named in such a way that their names should lend clarity to their purposes.
