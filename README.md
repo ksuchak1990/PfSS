@@ -8,6 +8,7 @@ Their behaviours include movement around the environment, eating/grazing, sharin
 This is achieved by implementing the agents through an object-oriented approach, by which an Agent class has been designed which defines the behaviours of all instances of the Agent.
 This Agent class is defined in agentframework.py.
 
+## Running the code
 The original intention is that this code be run from the command-line/terminal by running
 
 ```python model.py [arg1=10] [arg2=100] [arg3=20]```
@@ -17,7 +18,9 @@ where the arguments are optional and defined as follows:
 * `arg2`: number of iterations
 * `arg3`: neighbourhood in terms of cartesian distance from agent
 In the case when arguments are not provided, default values will be used.
+Please note that the code was written under Python 3.6, and so it is crucial that the code is run using some version of Python 3 (this may need to be specified at the command-line).
 
-Notes:
-* have used CamelCase naming convention.
-* the programmer assumes that users are aware of 'get' and 'set' function naming for accessor and modifier methods respectively.
+## Conventions
+For those interested in the code, the programmer has assumed the reader's awareness of the following conventions:
+* CamelCase naming convention,
+* 'get' and 'set' function naming for accessor and modifier methods respectively.
